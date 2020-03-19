@@ -1,0 +1,166 @@
+1.Number
+
+example
+>>> tax = 12.5 / 100
+>>> price = 100.50
+>>> price * tax
+12.5625
+>>> price + _
+113.0625
+>>> round(_, 2)
+113.06
+
+最后一次输出的结果默认保存在变量'_'中
+
+
+
+2.Strings
+
+单双引号和是否转义处理方式需要注意，最好实际测试输出结果是否符合要求
+
+
+多个字符串写在一起会自动连接
+example
+>>> 'Py' 'thon'
+'Python'
+
+>>> text = ('Put several strings within parentheses '
+...         'to have them joined together.')
+>>> text
+'Put several strings within parentheses to have them joined together.'
+
+tip:在输入长字符串时比较好用,不能附带变量或使用表达式
+
+
+切片工作原理是将索引看作字符间的点,取左点到右点之内的数字,左右的省略表示取最左边或最右边
+
+example
+ +---+---+---+---+---+---+
+ | P | y | t | h | o | n |
+ +---+---+---+---+---+---+
+ 0   1   2   3   4   5   6
+-6  -5  -4  -3  -2  -1
+
+>>> text = 'Python'
+>>> text[1:5]
+'ytho'
+>>> text[-5:-1]
+'ytho'
+>>> text[1:-1]
+'ytho'
+>>> text[-5:5]
+'ytho'
+>>> text[5:1]
+''
+
+
+超出范围的索引会报错,超出范围的切片不会
+
+example
+>>> text[4:42]
+'on'
+>>> text[42:]
+''
+
+
+字符串不可变,不能通过索引修改字符串只能创建一个新的
+
+
+函数默认值处理需要关注
+
+函数的关键字参数跟随传入的位置参数,传入的关键字参数必须与函数的关键字参数匹配
+
+可以通过标志来确定各参数自身的位置匹配和关键字匹配的特性
+def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
+      -----------    ----------     ----------
+        |             |                  |
+        |        Positional or keyword   |
+        |                                - Keyword only
+         -- Positional only
+
+'/'和'*'是标志
+
+
+*args处理任意参数**kwargs处理键值对的参数传递
+关键是'*'和'**'操作符代表的意思
+
+
+lambda 输入参数:输出表达式
+三元表达式    变量1 if a>b else 变量2
+
+
+函数注释
+
+example
+>>> def f(ham: str, eggs: str = 'eggs') -> str:
+...     print("Annotations:", f.__annotations__)
+...     print("Arguments:", ham, eggs)
+...     return ham + ' and ' + eggs
+...
+>>> f('spam')
+Annotations: {'ham': <class 'str'>, 'return': <class 'str'>, 'eggs': <class 'str'>}
+Arguments: spam eggs
+'spam and eggs'
+
+参数的注释加在:后面,返回值的注释加在->后面
+
+
+3.Output
+
+str函数返回符合人阅读的值repr函数返回符合解释器的值
+
+example
+>>> s = 'Hello, world.'
+>>> str(s)
+'Hello, world.'
+>>> repr(s)
+"'Hello, world.'"
+>>> str(1/7)
+'0.14285714285714285'
+>>> x = 10 * 3.25
+>>> y = 200 * 200
+>>> s = 'The value of x is ' + repr(x) + ', and y is ' + repr(y) + '...'
+>>> print(s)
+The value of x is 32.5, and y is 40000...
+>>> # The repr() of a string adds string quotes and backslashes:
+... hello = 'hello, world\n'
+>>> hellos = repr(hello)
+>>> print(hellos)
+'hello, world\n'
+>>> # The argument to repr() may be any Python object:
+... repr((x, y, ('spam', 'eggs')))
+"(32.5, 40000, ('spam', 'eggs'))"
+
+>>> s = 'hello\n'
+>>> str(s)
+'hello\n'
+>>> repr(s)
+"'hello\\n'"
+
+
+在字符串中添加表达式的值通过在字符串前面添加f或F并且像{expression}这样添加表达式对应str.format
+以非转义的形式输出结果在字符串前面添加r对应repr函数
+
+example
+>>> import math
+>>> print(f'The value of pi is approximately {math.pi:.3f}.')
+The value of pi is approximately 3.142.
+>>> print('The value of pi is approximately {math.pi:.3f}.')
+The value of pi is approximately {math.pi:.3f}.
+
+限制字符宽度
+>>> table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 7678}
+>>> for name, phone in table.items():
+...     print(f'{name:10s} ==> {phone:10d}')
+...
+Sjoerd     ==>       4127
+Jack       ==>       4098
+Dcab       ==>       7678
+
+
+>>> animals = 'eels'
+>>> print(f'My hovercraft is full of {animals}.')
+My hovercraft is full of eels.
+>>> print(f'My hovercraft is full of {animals!r}.')
+My hovercraft is full of 'eels'.
+
