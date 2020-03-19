@@ -164,3 +164,5 @@ My hovercraft is full of eels.
 >>> print(f'My hovercraft is full of {animals!r}.')
 My hovercraft is full of 'eels'.
 
+
+global是全局的绑定nonlocal是上一级的绑定
